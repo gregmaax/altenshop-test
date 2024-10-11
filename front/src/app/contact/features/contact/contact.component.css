@@ -1,0 +1,10 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  gap: 5px;
+
+  .p-dropdown, .p-inputnumber {
+    width: 100%;
+  }
+}

@@ -1,0 +1,62 @@
+<h1 class="text-center">Liste des produits</h1>
+
+<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+
+<p-dataView #dv [value]="products()">
+    <ng-template pTemplate="list" let-products>
+        @for (product of products; track product) {
+            <p-card class="block mb-2">
+              <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+              <div class="flex flex-row justify-content-between">
+                <div>
+                  <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+                </div>
+                <div class="flex flex-row gap-2 align-items-center">
+                  @switch (product.quantity != null){
+                    @case (product.quantity == 0){
+                      <p-tag value="Épuisé" severity="danger"/>
+                    }
+                    @case (product.quantity < 10){
+                      <p-tag value="Presque épuisé" severity="warning"/>
+                    }
+                    @default {
+                      <p-tag value="En stock" severity="secondary"/>
+                    }
+                  }
+                  <span class="font-italic text-sm">{{product.quantity}} restants</span>
+                </div>
+              </div>
+              <div class="text-sm font-italic mt-2">{{product.description}}</div>
+
+
+                <ng-template pTemplate="footer">
+                  <div class="flex flex-row justify-content-between">
+                    <div class="flex gap-3 mt-1">
+                      <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
+                      <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
+                      @if(!isItemInCart(product.id)){
+                        <p-button label="Ajouter au panier" severity="primary" (onClick)="onAddToCart(product.id, product.name)" />
+                      } @else {
+                        <app-cart-items-counter
+                          [cartItemCount]="getProductCartItem(product.id)"
+                          (decrement)="decrementQuantity(product.id)"
+                          (increment)="incrementQuantity(product.id)"/>
+                        <p-button label="Supprimer du panier" severity="primary" (onClick)="onDeleteFromCart(product.id)" />
+                      }
+                    </div>
+                  </div>
+                </ng-template>
+            </p-card>
+        }
+    </ng-template>
+</p-dataView>
+
+<p-dialog [(visible)]="isDialogVisible"
+    [style]="{ width: '50vw' }"
+    header="Ajout/Edition produit">
+    <app-product-form
+        [product]="editedProduct()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+    />
+</p-dialog>
