@@ -26,10 +26,10 @@ import {InputTextareaModule} from "primeng/inputtextarea";
                    email>
           </div>
           @if((emailInput.invalid && (emailInput.dirty || emailInput.touched)) && emailInput.errors?.['required']){
-            <span>Un email est requis</span>
+            <span class="text-sm text-red-500">Un email est requis</span>
           }
           @if((emailInput.invalid && (emailInput.dirty || emailInput.touched)) && emailInput.errors?.['email']){
-            <span>Entrez une adresse email valide.</span>
+            <span class="text-sm text-red-500">Entrez une adresse email valide.</span>
           }
           <div class="form-field">
             <label for="message">Message</label>
@@ -41,13 +41,13 @@ import {InputTextareaModule} from "primeng/inputtextarea";
                       required
                       maxlength="300">
           </textarea>
-          </div>
           <span class="text-sm font-italic">Caractères restants: {{ 300 - (messageInput.value.length || 0) }}</span>
+          </div>
           @if ((messageInput.invalid && (messageInput.dirty || messageInput.touched)) && messageInput.errors?.['required']){
-            <span>Un message est requis</span>
+            <span class="text-sm text-red-500">Un message est requis</span>
           }
           @if ((messageInput.invalid && (messageInput.dirty || messageInput.touched)) && messageInput.errors?.['maxlength']){
-            <span>300 caractères maximum</span>
+            <span class="text-sm text-red-500">300 caractères maximum</span>
           }
 
           <div class="flex justify-content-between mt-3">
