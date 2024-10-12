@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    //TODO: gestion des erreurs pour les champs obligatoires
 
     @Autowired
     ProductRepository productRepository;
@@ -48,13 +47,13 @@ public class ProductServiceImpl implements ProductService {
 
         //update the fields
         productToUpdate.setName(product.getName());
+        productToUpdate.setCode(product.getCode());
         productToUpdate.setDescription(product.getDescription());
         productToUpdate.setPrice(product.getPrice());
         productToUpdate.setCategory(product.getCategory());
         productToUpdate.setQuantity(product.getQuantity());
         productToUpdate.setInventoryStatus(calculateInventoryStatus(product.getQuantity()));
         productToUpdate.setUpdatedAt(Instant.now().toEpochMilli());
-        //TODO: add the other fields once added in the frontend
 
         //save the updated product
         return productRepository.save(productToUpdate);
