@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("The product code cannot be null");
         }
         if (product.getPrice() == null || product.getPrice() <= 0) {
-            throw new IllegalArgumentException("The product code cannot be null and must be greater than 0");
+            throw new IllegalArgumentException("The product price cannot be null and must be greater than 0");
         }
         if (product.getQuantity() == null) {
             throw new IllegalArgumentException("The product quantity cannot be null");

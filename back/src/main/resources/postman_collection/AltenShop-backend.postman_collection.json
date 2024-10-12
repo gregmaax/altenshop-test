@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "1476e42a-ef94-45f7-856c-87df6161db57",
+		"name": "AltenShop-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38956132"
+	},
+	"item": [
+		{
+			"name": "Create A Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product\", function () {",
+							"    pm.response.to.have.status(201);",
+							"",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"id\");",
+							"    pm.expect(responseBody).to.have.property(\"name\", \"EAFC25\");",
+							"    pm.expect(responseBody).to.have.property(\"code\", \"F0025\");",
+							"    pm.expect(responseBody).to.have.property(\"description\", \"Probably one of the worst football game ever created\");",
+							"    pm.expect(responseBody).to.have.property(\"image\", \"https://example.com/images/eafc25.jpg\");",
+							"    pm.expect(responseBody).to.have.property(\"price\", 499.99);",
+							"    pm.expect(responseBody).to.have.property(\"category\", \"Electronics\");",
+							"    pm.expect(responseBody).to.have.property(\"inventoryStatus\", \"INSTOCK\");",
+							"    pm.expect(responseBody).to.have.property(\"quantity\", 50);",
+							"    ",
+							"    pm.environment.set(\"productId\", responseBody.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"F0025\",\n  \"name\": \"EAFC25\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"price\": 499.99,\n  \"quantity\": 50,\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Product By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get A Product By Id\", function () {",
+							"    pm.response.to.have.status(200);",
+							"",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"id\", pm.environment.get(\"productId\"));",
+							"    pm.expect(responseBody).to.have.property(\"name\", \"EAFC25\");",
+							"    pm.expect(responseBody).to.have.property(\"code\", \"F0025\");",
+							"    pm.expect(responseBody).to.have.property(\"description\", \"Probably one of the worst football game ever created\");",
+							"    pm.expect(responseBody).to.have.property(\"image\", \"https://example.com/images/eafc25.jpg\");",
+							"    pm.expect(responseBody).to.have.property(\"price\", 499.99);",
+							"    pm.expect(responseBody).to.have.property(\"category\", \"Electronics\");",
+							"    pm.expect(responseBody).to.have.property(\"inventoryStatus\", \"INSTOCK\");",
+							"    pm.expect(responseBody).to.have.property(\"quantity\", 50);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update A Product Field",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update A Product Field (name)\", function () {",
+							"    pm.response.to.have.status(200);",
+							"",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"id\", pm.environment.get(\"productId\"));",
+							"    pm.expect(responseBody).to.have.property(\"name\", \"EAFC25 Updated name\");",
+							"    pm.expect(responseBody).to.have.property(\"code\", \"F0025\");",
+							"    pm.expect(responseBody).to.have.property(\"description\", \"Probably one of the worst football game ever created\");",
+							"    pm.expect(responseBody).to.have.property(\"image\", \"https://example.com/images/eafc25.jpg\");",
+							"    pm.expect(responseBody).to.have.property(\"price\", 499.99);",
+							"    pm.expect(responseBody).to.have.property(\"category\", \"Electronics\");",
+							"    pm.expect(responseBody).to.have.property(\"inventoryStatus\", \"INSTOCK\");",
+							"    pm.expect(responseBody).to.have.property(\"quantity\", 50);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{productId}}\",\n    \"code\": \"F0025\",\n    \"name\": \"EAFC25 Updated name\",\n    \"description\": \"Probably one of the worst football game ever created\",\n    \"image\": \"https://example.com/images/eafc25.jpg\",\n    \"category\": \"Electronics\",\n    \"price\": 499.99,\n    \"quantity\": 50,\n    \"internalReference\": \"F-001\",\n    \"shellId\": 1,\n    \"inventoryStatus\": \"INSTOCK\",\n    \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get All Products\", function () {",
+							"    pm.response.to.have.status(200);",
+							"",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Each Product In List Has Correct Fields\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    responseBody.forEach((product) => {",
+							"        pm.expect(product).to.have.property('id');",
+							"        pm.expect(product).to.have.property('name');",
+							"        pm.expect(product).to.have.property('code');",
+							"        pm.expect(product).to.have.property('price');",
+							"        pm.expect(product).to.have.property('category');",
+							"        pm.expect(product).to.have.property('quantity');",
+							"        pm.expect(product).to.have.property('image');",
+							"        pm.expect(product).to.have.property('inventoryStatus');",
+							"        pm.expect(product).to.have.property('internalReference');",
+							"        pm.expect(product).to.have.property('rating');",
+							"        pm.expect(product).to.have.property('createdAt');",
+							"        pm.expect(product).to.have.property('updatedAt');",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Created Product Is Present\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    const createdProductId = pm.environment.get('productId');",
+							"    ",
+							"    const found = responseBody.some((product) => product.id === createdProductId);",
+							"    pm.expect(found).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A Product Without A Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product Without A Name\", function () {",
+							"    pm.response.to.have.status(500);",
+							"    ",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"The product name cannot be null\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"F0025\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"price\": 499.99,\n  \"quantity\": 50,\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A Product Without A Code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product Without A Code\", function () {",
+							"    pm.response.to.have.status(500);",
+							"    ",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"The product code cannot be null\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"EAFC25\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"price\": 499.99,\n  \"quantity\": 50,\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A Product Without A Quantity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product Without A Quantity\", function () {",
+							"    pm.response.to.have.status(500);",
+							"    ",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"The product quantity cannot be null\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"F0025\",\n  \"name\": \"EAFC25\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"price\": 499.99,\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A Product Without A Price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product Without A Price\", function () {",
+							"    pm.response.to.have.status(500);",
+							"    ",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"The product price cannot be null and must be greater than 0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"F0025\",\n  \"name\": \"EAFC25\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A Product With A Price Of Zero",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create A Product Without A Price\", function () {",
+							"    pm.response.to.have.status(500);",
+							"    ",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"The product price cannot be null and must be greater than 0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"F0025\",\n  \"name\": \"EAFC25\",\n  \"description\": \"Probably one of the worst football game ever created\",\n  \"image\": \"https://example.com/images/eafc25.jpg\",\n  \"category\": \"Electronics\",\n  \"price\": 0,\n  \"internalReference\": \"F-001\",\n  \"shellId\": 1,\n  \"inventoryStatus\": \"INSTOCK\",\n  \"rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Product By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete A Product By Id\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
